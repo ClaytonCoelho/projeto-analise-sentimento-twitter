@@ -99,6 +99,8 @@ As imagens dos containers também recebem as mesmas tags para relaciona-las a ve
 É disponibilizado uma API que recebe uma chamada GET na uri /train para iniciar a execução, possibilitando integrar com um sistema de agendamento externo.
 Aplicação então busca o dataset de treino de tweets no bucket AWS S3, executa o treino do modelo e disponibiliza o modelo treinado no bucket da AWS S3 para ser utilizado.
 
+Códigos fontes [Twitter Sentiment Train](https://github.com/ClaytonCoelho/projeto-analise-sentimento-twitter/tree/master/code/twitter_sentiment_train).
+
 **Home Projeto Gitlab**
 ![Home](images/app-treino-home.png)
 
@@ -127,6 +129,8 @@ O text será enviado para o modulo de análise de sentimentos treinado e retorna
 }
 ```
 
+Códigos fontes [Twitter Sentiment Model](https://github.com/ClaytonCoelho/projeto-analise-sentimento-twitter/tree/master/code/twitter_sentiment_model).
+
 **Home Projeto Gitlab**
 ![Home](images/app-modelo-home.png)
 
@@ -145,6 +149,8 @@ Aplicação realiza streaming nos tweets via API do Twitter, remove links, urls 
 **"data"**: Data do tweet.
 
 ![DynamoDB](images/dynamodb.png)
+
+Códigos fontes [Scan Twitter](https://github.com/ClaytonCoelho/projeto-analise-sentimento-twitter/tree/master/code/scan_twitter).
 
 **Home Projeto Gitlab**
 ![Home](images/app-consumo-home.png)
