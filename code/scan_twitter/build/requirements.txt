@@ -1,0 +1,6 @@
+boto==2.49.0
+boto3==1.14.61
+botocore==1.17.61
+requests==2.23.0
+nltk==3.5
+tweepy==3.8.0

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: twitter-sentiment-train
+  labels:
+    app: sentiment-train
+spec:
+  selector:
+    matchLabels:
+      app: sentiment-train
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: sentiment-train
+    spec:
+      containers:
+      - name: twitter-sentiment-train
+        image: __CI_REGISTRY_IMAGE__:__VERSION__
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          value: __AWS_ACCESS_KEY_ID__
+        - name: AWS_SECRET_ACCESS_KEY
+          value: __AWS_SECRET_ACCESS_KEY__
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: regcredteste
+      restartPolicy: OnFailure
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sentiment-train
+  name: twitter-sentiment-train
+  namespace: default
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 31112
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: sentiment-train
+  sessionAffinity: None
+  type: NodePort

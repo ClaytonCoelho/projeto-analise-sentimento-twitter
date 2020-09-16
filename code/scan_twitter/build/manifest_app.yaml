@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: twitter-scan
+  labels:
+    app: twitter-scan
+spec:
+  selector:
+    matchLabels:
+      app: twitter-scan
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: twitter-scan
+    spec:
+      containers:
+      - name: twitter-scan
+        image: __CI_REGISTRY_IMAGE__:__VERSION__
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          value: __AWS_ACCESS_KEY_ID__
+        - name: AWS_SECRET_ACCESS_KEY
+          value: __AWS_SECRET_ACCESS_KEY__
+        - name: TWITTER_CONSUMER_KEY
+          value: __TWITTER_CONSUMER_KEY__
+        - name: TWITTER_CONSUMER_SECRET
+          value: __TWITTER_CONSUMER_SECRET__
+        - name: TWITTER_API_TOKEN
+          value: __TWITTER_API_TOKEN__
+        - name: TWITTER_API_SECRET
+          value: __TWITTER_API_SECRET__
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: regcredteste
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: twitter-scan
+  name: twitter-scan
+  namespace: default
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 31113
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: twitter-scan
+  sessionAffinity: None
+  type: NodePort
